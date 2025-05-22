@@ -1,0 +1,208 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: #121212;
+  color: #e0e0e0;
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 95%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.site-header {
+  background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(187, 134, 252, 0.1);
+  padding: 15px 0;
+}
+.site-header.scrolled {
+  padding: 10px 0;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.logo-img {
+  height: 70px;
+  transition: all 0.3s;
+  filter: drop-shadow(0 2px 5px rgba(187, 134, 252, 0.3));
+  border-radius: 8px;
+}
+
+.site-nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none; /* Убирает точки */
+}
+@media (max-width: 768px) {
+  .site-nav {
+    position: fixed;
+    top: 80px;
+    right: -100%;
+    width: 80%;
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    transition: right 0.4s;
+  }
+  .site-nav ul {
+    flex-direction: column; /* Оставляем столбиком для мобильных */
+    padding: 0; /* Убираем стандартные отступы списка */
+  }
+  .site-nav.active {
+    right: 20px;
+  }
+}
+
+.nav-link {
+  text-decoration: none;
+  position: relative;
+  padding: 12px 20px;
+  border-radius: 30px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e0e0e0 !important;
+}
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: #BB86FC;
+  transition: width 0.3s;
+}
+.nav-link:hover::before {
+  width: 60%;
+}
+
+.cta-nav {
+  background: linear-gradient(45deg, #BB86FC, #a06cd5);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+}
+.burger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #e0e0e0;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+@media (max-width: 768px) {
+  .burger-menu {
+    display: flex;
+  }
+  .burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .burger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+}
+
+.hero {
+  text-align: center;
+  padding: 150px 0 60px;
+  background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
+}
+
+.registration {
+  background: #2a2a2a;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  margin-bottom: 60px;
+}
+.registration h2 {
+  font-size: 1.8rem;
+  color: #BB86FC;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  background: #121212;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #e0e0e0;
+  transition: border-color 0.3s;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #BB86FC;
+  outline: none;
+}
+
+.error-message {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #CF6679; /* Красный оттенок для ошибки */
+  display: none; /* Скрыто по умолчанию */
+}
+
+button[type=submit] {
+  width: 100%;
+  padding: 15px;
+  background: #BB86FC;
+  color: #121212;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+button[type=submit]:hover {
+  background: #a06cd5;
+}/*# sourceMappingURL=registration.css.map */

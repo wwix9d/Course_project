@@ -1,0 +1,238 @@
+// Переменные
+$bg-dark: #1e1e1e;
+$bg-darker: #121212;
+$bg-light: #2a2a2a;
+$accent: #BB86FC;
+$accent-hover: #a06cd5;
+$text-light: #e0e0e0;
+$text-muted: #ccc;
+$border-radius: 8px;
+$gap: 20px;
+$error-red: #CF6679;
+
+//  Глобальные стили
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: $bg-darker;
+  color: $text-light;
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 95%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $gap 0;
+}
+
+// Header
+.site-header {
+  background: linear-gradient(135deg, $bg-dark 0%, $bg-darker 100%);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba($accent, 0.1);
+  padding: 15px 0;
+
+  &.scrolled {
+    padding: 10px 0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+}
+
+.logo-img {
+  height: 70px;
+  transition: all 0.3s;
+  filter: drop-shadow(0 2px 5px rgba($accent, 0.3));
+  border-radius: $border-radius;
+}
+
+.site-nav {
+  ul {
+    display: flex;
+    gap: $gap;
+    list-style: none;
+  }
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 80px;
+    right: -100%;
+    width: 80%;
+    background: $bg-dark;
+    border-radius: $border-radius;
+    padding: 20px;
+    transition: right 0.4s;
+
+    ul {
+      flex-direction: column;
+      padding: 0;
+    }
+
+    &.active {
+      right: 20px;
+    }
+  }
+}
+
+.nav-link {
+  text-decoration: none;
+  position: relative;
+  padding: 12px 20px;
+  border-radius: 30px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $text-light !important;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: $accent;
+    transition: width 0.3s;
+  }
+
+  &:hover::before {
+    width: 60%;
+  }
+}
+
+.cta-nav {
+  background: linear-gradient(45deg, $accent, $accent-hover);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+
+  span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: $text-light;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+
+    &.active {
+      span {
+        &:nth-child(1) {
+          transform: rotate(45deg) translate(5px, 5px);
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+        &:nth-child(3) {
+          transform: rotate(-45deg) translate(7px, -6px);
+        }
+      }
+    }
+  }
+}
+
+// Hero секция
+.hero {
+  text-align: center;
+  padding: 150px 0 60px;
+  background: linear-gradient(135deg, $bg-dark 0%, $bg-darker 100%);
+}
+
+// Форма регистрации
+.registration {
+  background: $bg-light;
+  padding: 40px;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+  margin-bottom: 60px;
+
+  h2 {
+    font-size: 1.8rem;
+    color: $accent;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 12px;
+    background: $bg-darker;
+    border: 1px solid #333;
+    border-radius: $border-radius;
+    color: $text-light;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: $accent;
+      outline: none;
+    }
+  }
+}
+
+.error-message {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: $error-red;
+  display: none;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  background: $accent;
+  color: $bg-darker;
+  border: none;
+  border-radius: $border-radius;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background: $accent-hover;
+  }
+}
