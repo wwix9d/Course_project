@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="scss/registration.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Запись на пробное занятие — Онлайн школа гитары</title>
+
+    <!-- Ноты -->
+    <script>
+        const canvas = document.getElementById('noteCanvas');
+        const ctx = canvas.getContext('2d');
+        let notes = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Note {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 50;
+                this.size = 20 + Math.random() * 20;
+                this.speed = 0.5 + Math.random();
+                this.opacity = 0.3 + Math.random() * 0.7;
+            }
+            draw() {
+                ctx.globalAlpha = this.opacity;
+                ctx.font = `${this.size}px serif`;
+                ctx.fillStyle = '#BB86FC';
+                ctx.fillText('♪', this.x, this.y);
+            }
+            update() {
+                this.y -= this.speed;
+            }
+        }
+
+        function animateNotes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (Math.random() < 0.05) notes.push(new Note());
+            notes.forEach((note, index) => {
+                note.update();
+                note.draw();
+                if (note.y < -50) notes.splice(index, 1);
+            });
+            requestAnimationFrame(animateNotes);
+        }
+        animateNotes();
+    </script>
+</head>
+<body>
+    <canvas id="noteCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+
+    <!-- Хедер -->
+    <header class="site-header">
+        <div class="container">
+            <a href="main.html" class="logo-link">
+                <img src="img\logo.png" alt="Логотип" class="logo-img">
+            </a>
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="main.html" class="nav-link">Главная</a></li>
+                    <li><a href="teachers.html" class="nav-link">Преподаватели</a></li>
+                </ul>
+            </nav>
+            <p>+375 (29) 790-77-72</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <section class="hero" data-aos="fade-up" data-aos-delay="100">
+        <div class="container">
+            <h1 style="color:#BB86FC">Запись на пробное занятие</h1>
+            <p>Заполните форму ниже, и мы свяжемся с вами для подтверждения даты и времени.</p>
+        </div>
+    </section>
+
+    <section class="container">
+      <div class="registration">
+        <h2>Запись на курс</h2>
+        <p>Пожалуйста, укажите ваши данные:</p>
+        <form action="https://formspree.io/f/xdkgyvqy" method="POST" id="regForm" novalidate>
+          <div class="form-group">
+            <label for="firstname">Имя</label>
+            <input type="text" id="firstname" name="firstname" placeholder="Ваше имя" required>
+          </div>
+          <div class="form-group">
+            <label for="lastname">Фамилия</label>
+            <input type="text" id="lastname" name="lastname" placeholder="Ваша фамилия" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" placeholder="+375 (XX) XXX-XX-XX" required>
+          </div>
+          <div class="form-group">
+            <label for="city">Город</label>
+            <select id="city" name="city" required>
+              <option value="" disabled selected>Выберите город</option>
+              <option>Минск</option>
+              <option>Брест</option>
+              <option>Гродно</option>
+              <option>Барановичи</option>
+            </select>
+          </div>
+          <div class="form-group teacher">
+            <label for="teacher">Преподаватель</label>
+            <select id="teacher" name="teacher" required>
+              <option value="" disabled selected>Выберите преподавателя</option>
+              <option value="james">Джеймс Хетфилд</option>
+              <option value="dimbag">Даймбэг Даррелл</option>
+              <option value="steve">Стив Вай</option>
+              <option value="van_halen">Эдди Ван Хален</option>
+              <option value="adam">Адам Джонс</option>
+            </select>
+          </div>
+          <div class="form-group date">
+            <label for="date">Дата первого занятия</label>
+            <input type="date" id="date" name="date" required>
+            <div class="error-message" id="dateError">Дата должна быть не ранее <span id="minDateText"></span>.</div>
+           </div>
+          <button type="submit" id="submitBtn" disabled>Записаться</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+
+    <script>
+    // Бургер-меню
+    const burgerMenu = document.querySelector('.burger-menu');
+    const siteNav = document.querySelector('.site-nav');
+
+    burgerMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      burgerMenu.classList.toggle('active');
+      siteNav.classList.toggle('active');
+    });
+
+    // Закрытие при клике вне меню
+    document.addEventListener('click', (e) => {
+      if (!siteNav.contains(e.target) && !burgerMenu.contains(e.target)) {
+        burgerMenu.classList.remove('active');
+        siteNav.classList.remove('active');
+      }
+    });
+
+    // Закрытие при клике на ссылку
+    document.querySelectorAll('.site-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerMenu.classList.remove('active');
+        siteNav.classList.remove('active');
+      });
+    });
+    </script>
+
+<!-- Скролл header -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.site-header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+
+<!-- Проверка даты -->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const dateInput = document.getElementById('date');
+    const dateError = document.getElementById('dateError');
+    const submitBtn = document.getElementById('submitBtn');
+    const minOffsetDays = 3;
+
+    // Установка минимальной даты
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const minDate = new Date(today);
+    minDate.setDate(today.getDate() + minOffsetDays);
+
+    // Форматирование даты для отображения
+    const formatDate = (date) => {
+        return date.toLocaleDateString('ru-RU', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+    };
+
+    // Показываем минимальную дату в сообщении
+    document.getElementById('minDateText').textContent = formatDate(minDate);
+
+    // Проверка даты при изменении
+    const validateDate = () => {
+        const selectedDate = new Date(dateInput.value);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        if (selectedDate < minDate || isNaN(selectedDate.getTime())) {
+            dateError.style.display = 'block';
+            submitBtn.disabled = true;
+        } else {
+            dateError.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    };
+
+    // Инициализация при загрузке
+    validateDate();
+
+    // Слушатели событий
+    dateInput.addEventListener('change', validateDate);
+    dateInput.addEventListener('input', validateDate); // Для мгновенной реакции
+
+    // Блокировка отправки формы
+    document.getElementById('regForm').addEventListener('submit', (e) => {
+        if (submitBtn.disabled) {
+            e.preventDefault();
+            alert('Пожалуйста, выберите корректную дату занятия.');
+        }
+    });
+});
+    </script>
+
+<!-- Выбор преподавателя -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const teacherId = urlParams.get('teacher');
+        
+        if (teacherId) {
+            const teacherSelect = document.getElementById('teacher');
+            const validOptions = Array.from(teacherSelect.options).map(opt => opt.value);
+            
+            if (validOptions.includes(teacherId)) {
+                teacherSelect.value = teacherId;
+                teacherSelect.closest('.form-group').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <link href="scss/teachers.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Наши преподаватели</title>
+
+    <!-- Ноты -->
+    <script>
+        const canvas = document.getElementById('noteCanvas');
+        const ctx = canvas.getContext('2d');
+        let notes = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Note {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 20;
+                this.size = 20 + Math.random() * 20;
+                this.speed = 0.5 + Math.random();
+                this.opacity = 0.3 + Math.random() * 0.7;
+            }
+            draw() {
+                ctx.globalAlpha = this.opacity;
+                ctx.font = `${this.size}px serif`;
+                ctx.fillStyle = '#BB86FC';
+                ctx.fillText('♪', this.x, this.y);
+                ctx.globalAlpha = 1;
+            }
+            update() {
+                this.y -= this.speed;
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (Math.random() < 0.05) notes.push(new Note());
+            notes.forEach((n, i) => {
+                n.update();
+                n.draw();
+                if (n.y < -50) notes.splice(i, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</head>
+<body>
+
+    <canvas id="noteCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <header class="site-header">
+        <div class="container">
+            <a href="main.html" class="logo-link">
+                <img src="img\logo.png" alt="Логотип" class="logo-img">
+            </a>
+            
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="main.html" class="nav-link">Главная</a></li>
+                    <li><a href="registration.html" class="nav-link cta-nav">Записаться</a></li>
+                </ul>
+            </nav>
+            <p>+375 (29) 790-77-72</p>
+        </div>
+    </header>
+
+    <main class="main-section container">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1>Наши преподаватели</h1>
+        <div class="teacher-container">
+            <div class="teacher-card" data-link="registration.html?teacher=james" data-aos="fade-up" data-aos-delay="100">
+                <img src="img/james.jpg" alt="Джеймс Хетфилд">
+                <div class="overlay">
+                    <p class="teacher-name">Джеймс Хетфилд</p>
+                    <p class="description">Хотите научиться играть быстрые гитарные риффы, тогда это точно ваш выбор</p>
+                </div>
+            </div>
+            <div class="teacher-card" data-link="registration.html?teacher=dimbag" data-aos="fade-up" data-aos-delay="200">
+                <img src="img/dimbag.webp" alt="Даймбэг Даррелл">
+                <div class="overlay">
+                    <p class="teacher-name">Даймбэг Даррелл</p>
+                    <p class="description">Если же вы хотите научится сразу игре соло партий, убойным рифы, то он вас уже ждёт..</p>
+                </div>
+            </div>
+            <div class="teacher-card" data-link="registration.html?teacher=steve" data-aos="fade-up" data-aos-delay="300">
+                <img src="img/steve_vai.jpg" alt="Стив Вай">
+                <div class="overlay">
+                    <p class="teacher-name">Стив Вай</p>
+                    <p class="description">Может быть ваш выбор упална игру мелодичных и очаровыввоющих соло - это ваш преподаватель</p>
+                </div>
+            </div>
+            <div class="teacher-card" data-link="registration.html?teacher=van_halen" data-aos="fade-up" data-aos-delay="400">
+                <img src="img/van_HALEN.jpg" alt="Эдди Ван Хален">
+                <div class="overlay">
+                    <p class="teacher-name">Эдди Ван Хален </p>
+                    <p class="description">Такой же универсальный как иДаррелл, но чуть больше упоридет в соло игру.
+                        Понраилось, тогда смело выбирайте этого лучезарного парня</p>
+                </div>
+            </div>
+            <div class="teacher-card" data-link="registration.html?teacher=adam" data-aos="fade-up" data-aos-delay="500">
+                <img src="img/adam_tool.jpg" alt="Адам Джонс">
+                <div class="overlay">
+                    <p class="teacher-name">Адам Джонс</p>
+                    <p class="description">Если же у вас есть тяга на что-нибудь интересное, что нибудь, что спобно завораживать, тогда смело идите к нему</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-section">
+        <div class="container contact-information">
+            <p>© 2025 Онлайн школа игры на гитаре. Все права защищены.</p>
+            <p>Контакты: egor7907772@gmail.com | +375 29 790-77-72</p>
+            <p>Следите за нами: Facebook | Instagram | YouTube</p>
+        </div>
+    </footer>
+
+    <script>
+        // Бургер-меню
+        const burgerMenu = document.querySelector('.burger-menu');
+        const siteNav = document.querySelector('.site-nav');
+
+        burgerMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+            burgerMenu.classList.toggle('active');
+            siteNav.classList.toggle('active');
+        });
+
+        // Закрытие при клике вне меню
+        document.addEventListener('click', (e) => {
+            if (!siteNav.contains(e.target) && !burgerMenu.contains(e.target)) {
+                burgerMenu.classList.remove('active');
+                siteNav.classList.remove('active');
+            }
+        });
+
+        // Закрытие при клике на ссылку
+        document.querySelectorAll('.site-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                burgerMenu.classList.remove('active');
+                siteNav.classList.remove('active');
+            });
+        });
+    </script>
+
+<!-- AOS-->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+
+<!-- Скролл header-->
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.site-header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+    <script>
+        // Обработчик кликов для карточек
+        document.querySelectorAll('.teacher-card').forEach(card => {
+            card.addEventListener('click', () => {
+                window.location.href = card.dataset.link;
+            });
+        });
+    </script>
+</body>
+
+</html>
